@@ -1,5 +1,7 @@
 const express = require('express')
+
 const router = new express.Router()
+
 const Task = require('../models/task')
 
 router.post('/tasks', async (req, res) => {
@@ -25,6 +27,7 @@ router.patch('/tasks/:id', async (req, res) => {
     const _id = req.params.id
 
     const updates = Object.keys(req.body)
+
     const allowedUpdate = ['description', 'completed']
 
     const isValidOperation = updates.every((update) => allowedUpdate.includes(update))

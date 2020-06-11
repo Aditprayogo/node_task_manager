@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-
 const bcrypt = require('bcryptjs')
 
 
@@ -52,6 +51,8 @@ userSchema.pre('save', async function (next) {
     const user = this
 
     // kalau user password ke ganti 
+    //true ketika user update
+    //true ketika buat user
     if (user.isModified('password')) {
 
         user.password = await bcrypt.hash(user.password, 8)

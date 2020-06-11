@@ -1,5 +1,7 @@
 const express = require('express')
+
 const router = new express.Router()
+
 const User = require('../models/user')
 
 router.post('/users', async (req, res) => {
@@ -54,27 +56,30 @@ router.get('/users/:id', async (req, res) => {
     }
 })
 
+
 // update user by id
 router.patch('/users/:id', async (req, res) => {
 
     const _id = req.params.id
     // return array dari object
     const updates = Object.keys(req.body)
-
     const allowedUpdates = ['name', 'email', 'password', 'age']
     // dicek 
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
         return res.status(400).send({ error: 'Invalid updates' })
+
     }
 
     try {
-
+        //find user
         const user = await User.findById(_id)
 
+        //update array are being applied
         updates.forEach((update) => user[update] = req.body[update])
 
+        //user save
         await user.save()
 
         if (!user) {
